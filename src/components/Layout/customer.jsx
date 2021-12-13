@@ -23,7 +23,7 @@ class Customer extends React.Component {
         }).catch((error) => {
             this.setState({
                 ...this.state,
-                errorMsg : error.message
+                errorMsg : error.response.data.message
             });
         })
     }
@@ -94,11 +94,11 @@ class Customer extends React.Component {
                                                         </td>
                                                         <td>{customer.pan}</td>
                                                         <td>
-                                                            <button className="btn btn-sm btn-outline-success">
+                                                            <Link to={`/customer/update/${customer.id}`} className="btn btn-sm btn-outline-success">
                                                                 <i class="fas fa-edit" />
                                                                 &nbsp;&nbsp;
                                                                 Update
-                                                            </button>
+                                                            </Link>
 
                                                             <button
                                                                 className="btn btn-sm btn-outline-danger"

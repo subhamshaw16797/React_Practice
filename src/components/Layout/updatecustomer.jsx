@@ -1,69 +1,43 @@
-import React from 'react';
-import axios from 'axios';
-// import Joi from "joi-browser";
+import React from "react";
+import axios from "axios";
 
-class AddCustomer extends React.Component {
+class UpdateCustomer extends React.Component {
     state = {
         customer: {
             username: "",
             mobileNumber: "",
             email: "",
             accountNo: "",
-            pan: ""
+            pan: "",
         },
         errors: {},
         errorMsg: "",
     };
 
-    // schema = Joi.object({
-    //     username: Joi.string()
-    //         .pattern(new RegExp('^[a-zA-Z0-9]{3,}$'))
-    //         .required(),
-    //     mobileNumber: Joi.string()
-    //         .pattern(new RegExp("^[7-9][0-9]{9}$"))
-    //         .required(),
-    //     email: Joi.string()
-    //         .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
-    //         .pattern(new RegExp("^[a-zA-Z]{3,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}&"))
-    //         .required(),
-    //     accountNo: Joi.number()
-    //         .integer()
-    //         .required(),
-    //     pan: Joi.string()
-    //         .pattern(new RegExp("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"))
-    //         .required(),
-    // });
-
-    // // validate method
-    // validate = () => {
-    //     const errors = {};
-    //     const result = Joi.validate(this.state.customer, this.schema, {
-    //         abortEarly: false
-    //     });
-
-    //     console.log(result);
-
-    //     if (result.error != null)
-    //         for (let item of result.error.details) {
-    //             errors[item.path[0]] = item.message
-    //         }
-    //     return Object.keys(errors).length === 0 ? null : errors;
-    // };
+    componentDidMount() {
+        const dataUrl = `http://localhost:8080/customer/getSingleCustomer/${this.props.match.params.id}`;
+        axios.get(dataUrl).then((response) => {
+            console.log(response.data);
+            this.setState({
+                ...this.state.customer,
+                customer : response.data
+            })
+        }).catch((error) => {
+            console.log(error);
+            this.setState({
+                ...this.state,
+                error : error.response.data.message
+            });
+        });
+    }
 
     updateInput = (event) => {
         this.setState({
             customer: {
                 ...this.state.customer,
                 [event.target.name]: event.target.value,
-            }
+            },
         });
-        // console.log(this.state.customer);
-        // const customer = { ...this.state.customer };
-        // customer[event.target.name] = event.target.value;
-        // this.setState({
-        //     customer: customer
-        // });
-        // console.log(customer);
     };
 
     handleSubmit = (event) => {
@@ -80,13 +54,13 @@ class AddCustomer extends React.Component {
         //     return;
 
         // sending request
-        const dataUrl = `http://localhost:8080/customer/addCustomer`;
+        const dataUrl = `http://localhost:8080/customer/updateCustomer/${this.props.match.params.id}`;
         axios
-            .post(dataUrl, this.state.customer)
+            .put(dataUrl, this.state.customer)
             .then((response) => {
                 console.log(response.data);
                 alert(
-                    "Added Customer " +
+                    "Update Customer details " +
                         this.state.customer.username +
                         " successfully !!!"
                 );
@@ -103,7 +77,6 @@ class AddCustomer extends React.Component {
     render() {
         const { customer } = this.state;
         const { errors, errorMsg } = this.state;
-        console.log(this.state.customer);
         return (
             <section className="landing">
                 <div className="wrapper">
@@ -113,7 +86,7 @@ class AddCustomer extends React.Component {
                                 <div className="card mt-3">
                                     <div className="card-header bg-warning text-black text-center">
                                         <h4 className="fw-bolder">
-                                            Add Customer
+                                            Update Customer
                                         </h4>
                                     </div>
                                     {errorMsg && (
@@ -250,5 +223,5 @@ class AddCustomer extends React.Component {
         );
     }
 }
- 
-export default AddCustomer;
+
+export default UpdateCustomer;

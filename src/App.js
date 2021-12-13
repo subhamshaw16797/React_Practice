@@ -6,10 +6,10 @@ import About from "./components/Layout/about";
 import ContactUs from "./components/Layout/contactus";
 import Login from "./components/Layout/login";
 import Register from "./components/Layout/register";
-import Cart from "./components/Layout/cart";
 import PageNotFound from "./components/Layout/pagenotfound";
 import Customer from "./components/Layout/customer";
 import AddCustomer from "./components/Layout/addcustomer";
+import UpdateCustomer from "./components/Layout/updatecustomer";
 
 function App() {
     return (
@@ -19,11 +19,11 @@ function App() {
                 <Route exact path='/home' component={Home} />
                 <Route exact path='/customer' component={Customer} />
                 <Route exact path='/customer/add' component={AddCustomer} />
+                <Route exact path='/customer/update/:id' component={UpdateCustomer} />
                 <Route exact path='/about' component={About} />
                 <Route exact path='/contactus' component={ContactUs} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/register' component={Register} />
-                <Route exact path='/cart' component={Cart} />
                 <Redirect exact path='/' to='/home'/>
                 <Route component={PageNotFound}/>
             </Switch>

@@ -87,12 +87,12 @@ class NavBar extends React.Component {
                                         Logout
                                     </a>
                                 </li> */}
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <NavLink className="nav-link" exact to="/cart">
                                         <i class="fas fa-shopping-cart"/>&nbsp;
                                         Cart
                                     </NavLink>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                     </div>

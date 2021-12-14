@@ -10,6 +10,7 @@ import PageNotFound from "./components/Layout/pagenotfound";
 import Customer from "./components/Layout/customer";
 import AddCustomer from "./components/Layout/addcustomer";
 import UpdateCustomer from "./components/Layout/updatecustomer";
+import CustomerProfile from "./components/Layout/customerprofile";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route exact path='/customer' component={Customer} />
                 <Route exact path='/customer/add' component={AddCustomer} />
                 <Route exact path='/customer/update/:id' component={UpdateCustomer} />
+                <Route exact path='/customer/profile/' component={CustomerProfile} />
                 <Route exact path='/about' component={About} />
                 <Route exact path='/contactus' component={ContactUs} />
                 <Route exact path='/login' component={Login} />

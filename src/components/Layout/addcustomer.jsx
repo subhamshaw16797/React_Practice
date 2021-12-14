@@ -9,7 +9,8 @@ class AddCustomer extends React.Component {
             mobileNumber: "",
             email: "",
             accountNo: "",
-            pan: ""
+            pan: "",
+            role: ""
         },
         errors: {},
         errorMsg: "",
@@ -159,7 +160,7 @@ class AddCustomer extends React.Component {
                                                 type="tel"
                                                 className="form-control"
                                                 // placeholder="Mobile Number"
-                                                id="mobileNum"
+                                                id="mobileNumber"
                                                 name="mobileNumber"
                                                 value={customer.mobileNumber}
                                                 onChange={this.updateInput}
@@ -212,7 +213,7 @@ class AddCustomer extends React.Component {
                                                 </small>
                                             )}
                                         </div>
-                                        <div className="mb-2">
+                                        <div className="mb-4">
                                             <label
                                                 htmlFor="pan"
                                                 className="form-label fw-bold text-black"
@@ -232,6 +233,22 @@ class AddCustomer extends React.Component {
                                                 <small>{errors.pan}</small>
                                             )}
                                         </div>
+                                        <select
+                                            className="form-select text-center mb-3"
+                                            aria-label="Default select example"
+                                            value={customer.role}
+                                            name="role"
+                                            onChange={this.updateInput}
+                                        >
+                                            <option selected>
+                                                Select Role
+                                            </option>
+                                            <option value="admin">Admin</option>
+                                            <option value="customer">
+                                                Customer
+                                            </option>
+                                        </select>
+                                        {errors && <small>{errors.role}</small>}
                                         <div className="d-grid gap-2 mt-2">
                                             <button
                                                 type="submit"

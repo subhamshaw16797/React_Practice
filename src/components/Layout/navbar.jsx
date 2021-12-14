@@ -83,9 +83,9 @@ class NavBar extends React.Component {
                                     </NavLink>
                                 </li>
                                 {/* <li className="nav-item">
-                                    <a className="nav-link" href="#">
+                                    <NavLink className="nav-link" href="#">
                                         Logout
-                                    </a>
+                                    </NavLink>
                                 </li> */}
                                 {/* <li className="nav-item">
                                     <NavLink className="nav-link" exact to="/cart">

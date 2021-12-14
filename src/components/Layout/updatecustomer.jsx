@@ -185,7 +185,7 @@ class UpdateCustomer extends React.Component {
                                                 </small>
                                             )}
                                         </div>
-                                        <div className="mb-2">
+                                        <div className="mb-4">
                                             <label
                                                 htmlFor="pan"
                                                 className="form-label fw-bold text-black"

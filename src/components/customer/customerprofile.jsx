@@ -9,7 +9,7 @@ import {
     CardActions,
     Typography,
 } from "@mui/material";
-import GasBookModal from "./GasBookModal";
+import GasBookModal from "./gasbookingmodal";
 
 function CustomerProfile() {
     const [open, setOpen] = React.useState(false);
@@ -25,16 +25,13 @@ function CustomerProfile() {
                     md={3}
                     style={{ border: "2px solid black", height: "93vh" }}
                 >
-                    <h1>Left1</h1>
-                    <Stack spacing={2} direction="row">
+                    <Stack spacing={5} direction="column">
                         <Button variant="contained">
                             Update Profile Details
                         </Button>
-                    </Stack>
-                    <h1>Left2</h1>
-                    <Stack spacing={2} direction="row">
                         <Button variant="contained">Update Bank Details</Button>
                     </Stack>
+                    {/* <Stack spacing={2} direction="row"></Stack> */}
                 </Grid>
                 <Grid item xs={8} md={9} style={{ border: "2px solid black" }}>
                     <h1>Right</h1>
@@ -59,7 +56,10 @@ function CustomerProfile() {
                                 Book Now
                             </Button>
                         </CardActions>
-                        <GasBookModal isModalOpen={open} handleCloseGasModal={ handleClose }/>
+                        <GasBookModal
+                            isModalOpen={open}
+                            handleCloseGasModal={handleClose}
+                        />
                     </Card>
                 </Grid>
             </Grid>

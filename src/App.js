@@ -1,16 +1,16 @@
 import "./App.css";
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import Home from "./components/Layout/home";
-import NavBar from "./components/Layout/navbar";
-import About from "./components/Layout/about";
-import ContactUs from "./components/Layout/contactus";
-import Login from "./components/Layout/login";
-import Register from "./components/Layout/register";
-import PageNotFound from "./components/Layout/pagenotfound";
-import Customer from "./components/Layout/customer";
-import AddCustomer from "./components/Layout/addcustomer";
-import UpdateCustomer from "./components/Layout/updatecustomer";
-import CustomerProfile from "./components/Layout/customerprofile";
+import Home from "./components/layout/home";
+import NavBar from "./components/layout/navbar";
+import About from "./components/layout/about";
+import ContactUs from "./components/layout/contactus";
+import Login from "./components/layout/login";
+import Register from "./components/layout/register";
+import PageNotFound from "./components/layout/pagenotfound";
+import Customer from "./components/customer/customer";
+import AddCustomer from "./components/customer/addcustomer";
+import UpdateCustomer from "./components/customer/updatecustomer";
+import CustomerProfile from "./components/customer/customerprofile";
 
 function App() {
     return (

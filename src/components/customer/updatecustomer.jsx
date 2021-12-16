@@ -26,7 +26,7 @@ class UpdateCustomer extends React.Component {
             console.log(error);
             this.setState({
                 ...this.state,
-                error : error.response.data.message
+                error : error.message
             });
         });
     }

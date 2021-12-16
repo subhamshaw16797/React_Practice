@@ -7,8 +7,7 @@ class UpdateCustomer extends React.Component {
             username: "",
             mobileNumber: "",
             email: "",
-            accountNo: "",
-            pan: "",
+            address:""
         },
         errors: {},
         errorMsg: "",
@@ -69,7 +68,7 @@ class UpdateCustomer extends React.Component {
             .catch((error) => {
                 this.setState({
                     ...this.state,
-                    errorMsg: error.response.data.message,
+                    errorMsg: error.message,
                 });
             });
     };
@@ -168,44 +167,24 @@ class UpdateCustomer extends React.Component {
                                                 htmlFor="accountNo"
                                                 className="form-label fw-bold text-black"
                                             >
-                                                Account Number
+                                                Address
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 // placeholder="Account Number"
-                                                id="accountNo"
-                                                name="accountNo"
-                                                value={customer.accountNo}
+                                                id="address"
+                                                name="address"
+                                                value={customer.address}
                                                 onChange={this.updateInput}
                                             />
                                             {errors && (
                                                 <small>
-                                                    {errors.accountNo}
+                                                    {errors.address}
                                                 </small>
                                             )}
                                         </div>
-                                        <div className="mb-4">
-                                            <label
-                                                htmlFor="pan"
-                                                className="form-label fw-bold text-black"
-                                            >
-                                                PAN
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                // placeholder="PAN"
-                                                id="pan"
-                                                name="pan"
-                                                value={customer.pan}
-                                                onChange={this.updateInput}
-                                            />
-                                            {errors && (
-                                                <small>{errors.pan}</small>
-                                            )}
-                                        </div>
-                                        <div className="d-grid gap-2 mt-2">
+                                        <div className="d-grid gap-2 mt-4">
                                             <button
                                                 type="submit"
                                                 className="btn btn-success btn-md text-black fw-bold"

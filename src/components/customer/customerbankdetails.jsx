@@ -28,16 +28,16 @@ function CustomerBankDetails() {
                             Bank Details
                         </Typography>
                         <Typography variant="subtitle1">
-                            Username : subhamshaw
+                            Bank Name : Axis
                         </Typography>
                         <Typography variant="subtitle1">
-                            Email : subham@gmail.com
+                            Account Number : 451765
+                        </Typography>
+                        <Typography variant="subtitle1">
+                            IFSC No : ABCD0123456
                         </Typography>
                         <Typography variant="subtitle1">
                             Address : Baripada
-                        </Typography>
-                        <Typography variant="subtitle1">
-                            Mobile Number : 7008342858
                         </Typography>
                         <Typography variant="subtitle1">
                             PAN Number : IORPS5530A

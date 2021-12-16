@@ -8,8 +8,7 @@ class AddCustomer extends React.Component {
             username: "",
             mobileNumber: "",
             email: "",
-            accountNo: "",
-            pan: "",
+            address:"",
             role: ""
         },
         errors: {},
@@ -96,7 +95,7 @@ class AddCustomer extends React.Component {
             .catch((error) => {
                 this.setState({
                     ...this.state,
-                    errorMsg: error.response.data.message,
+                    errorMsg: error.message,
                 });
             });
     };
@@ -171,6 +170,7 @@ class AddCustomer extends React.Component {
                                                 </small>
                                             )}
                                         </div>
+                                        
                                         <div className="mb-2">
                                             <label
                                                 htmlFor="email"
@@ -193,48 +193,26 @@ class AddCustomer extends React.Component {
                                         </div>
                                         <div className="mb-2">
                                             <label
-                                                htmlFor="accountNo"
+                                                htmlFor="address"
                                                 className="form-label fw-bold text-black"
                                             >
-                                                Account Number
+                                                Address
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                // placeholder="Account Number"
-                                                id="accountNo"
-                                                name="accountNo"
-                                                value={customer.accountNo}
+                                                // placeholder="Address"
+                                                id="address"
+                                                name="address"
+                                                value={customer.address}
                                                 onChange={this.updateInput}
                                             />
                                             {errors && (
-                                                <small>
-                                                    {errors.accountNo}
-                                                </small>
-                                            )}
-                                        </div>
-                                        <div className="mb-4">
-                                            <label
-                                                htmlFor="pan"
-                                                className="form-label fw-bold text-black"
-                                            >
-                                                PAN
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                // placeholder="PAN"
-                                                id="pan"
-                                                name="pan"
-                                                value={customer.pan}
-                                                onChange={this.updateInput}
-                                            />
-                                            {errors && (
-                                                <small>{errors.pan}</small>
+                                                <small>{errors.address}</small>
                                             )}
                                         </div>
                                         <select
-                                            className="form-select text-center mb-3"
+                                            className="form-select text-center mt-4"
                                             aria-label="Default select example"
                                             value={customer.role}
                                             name="role"
@@ -249,7 +227,7 @@ class AddCustomer extends React.Component {
                                             </option>
                                         </select>
                                         {errors && <small>{errors.role}</small>}
-                                        <div className="d-grid gap-2 mt-2">
+                                        <div className="d-grid gap-2 mt-4">
                                             <button
                                                 type="submit"
                                                 className="btn btn-success btn-md text-black fw-bold"

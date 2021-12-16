@@ -67,8 +67,7 @@ class Customer extends React.Component {
                                             <th>User Name</th>
                                             <th>Mobile Number</th>
                                             <th>Email</th>
-                                            <th>Account No.</th>
-                                            <th>PAN</th>
+                                            <th>Address</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -90,9 +89,8 @@ class Customer extends React.Component {
                                                             {customer.email}
                                                         </td>
                                                         <td>
-                                                            {customer.accountNo}
+                                                            {customer.address}
                                                         </td>
-                                                        <td>{customer.pan}</td>
                                                         <td>
                                                             <Link to={`/customer/update/${customer.id}`} className="btn btn-sm btn-outline-success">
                                                                 <i class="fas fa-edit" />

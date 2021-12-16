@@ -39,9 +39,6 @@ function CustomerDetails() {
                         <Typography variant="subtitle1">
                             Mobile Number : 7008342858
                         </Typography>
-                        <Typography variant="subtitle1">
-                            PAN Number : IORPS5530A
-                        </Typography>
                     </div>
                 </CardContent>
 

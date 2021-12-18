@@ -4,6 +4,7 @@ import {
     Card,
     Typography,
 } from "@mui/material";
+import { useSelector } from 'react-redux'
 import ModeEditTwoToneIcon from "@mui/icons-material/ModeEditTwoTone";
 import FormModal from './formmodal';
 
@@ -11,7 +12,7 @@ function CustomerDetails() {
     const [open, setOpen] = React.useState(false);
     const handleGasBookModalOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const { userDetails: { username, email, address, mobileNumber } } = useSelector((state) => state.userData)
     return (
         <>
             <Card sx={{ maxWidth: 275 }} style={{ margin: "8px" }}>
@@ -22,22 +23,23 @@ function CustomerDetails() {
                             left: "250px",
                             color: "orange",
                             cursor: "pointer"
-                        }} /></span>
+                        }}
+                        /></span>
 
                         <Typography variant="h6" component="div">
                             Personal Details
                         </Typography>
                         <Typography variant="subtitle1">
-                            Username : subhamshaw
+                            Username : {username || ''}
                         </Typography>
                         <Typography variant="subtitle1">
-                            Email : subham@gmail.com
+                            Email : {email || ''}
                         </Typography>
                         <Typography variant="subtitle1">
-                            Address : Baripada
+                            Address : {address || ''}
                         </Typography>
                         <Typography variant="subtitle1">
-                            Mobile Number : 7008342858
+                            Mobile Number : {mobileNumber || ''}
                         </Typography>
                     </div>
                 </CardContent>

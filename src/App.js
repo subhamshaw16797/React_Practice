@@ -11,24 +11,36 @@ import Customer from "./components/customer/customer";
 import AddCustomer from "./components/customer/addcustomer";
 import UpdateCustomer from "./components/customer/updatecustomer";
 import CustomerProfile from "./components/customer/customerprofile";
+import AlertNotificationProvider from "./alert-context/alert-state";
+
 
 function App() {
     return (
         <Router>
-            <NavBar/>
-            <Switch>
-                <Route exact path='/home' component={Home} />
-                <Route exact path='/customer' component={Customer} />
-                <Route exact path='/customer/add' component={AddCustomer} />
-                <Route exact path='/customer/update/:id' component={UpdateCustomer} />
-                <Route exact path='/customer/profile/' component={CustomerProfile} />
-                <Route exact path='/about' component={About} />
-                <Route exact path='/contactus' component={ContactUs} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/register' component={Register} />
-                <Redirect exact path='/' to='/home'/>
-                <Route component={PageNotFound}/>
-            </Switch>
+            <AlertNotificationProvider>
+                <NavBar />
+                <Switch>
+                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/customer" component={Customer} />
+                    <Route exact path="/customer/add" component={AddCustomer} />
+                    <Route
+                        exact
+                        path="/customer/update/:id"
+                        component={UpdateCustomer}
+                    />
+                    <Route
+                        exact
+                        path="/customer/profile/"
+                        component={CustomerProfile}
+                    />
+                    <Route exact path="/about" component={About} />
+                    <Route exact path="/contactus" component={ContactUs} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Redirect exact path="/" to="/home" />
+                    <Route component={PageNotFound} />
+                </Switch>
+            </AlertNotificationProvider>
         </Router>
     );
 }

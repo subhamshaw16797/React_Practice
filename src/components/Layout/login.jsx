@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { TextField, Box, MenuItem, Paper, Button } from "@mui/material";
+import { useDispatch } from 'react-redux'
+import { TextField, Box, MenuItem, Paper, Button, IconButton } from "@mui/material";
 import axios from "axios";
-// import IconButton from '@mui/material/IconButton';
-// import Input from '@mui/material/Input';
-// import FilledInput from '@mui/material/FilledInput';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import FormHelperText from '@mui/material/FormHelperText';
-// import FormControl from '@mui/material/FormControl';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import { AlertNotificationContext } from '../../alert-context/alert-state';
+import { getUserDetails } from '../../redux/actions/userDetailsAction'
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const Login = () => {
+
+    const { setAlert } = useContext(AlertNotificationContext);
+    const dispatch = useDispatch()
     const history = useHistory();
     const roles = [
         {
@@ -30,11 +27,10 @@ const Login = () => {
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
-        role: "",
+        role: ""
     });
+    const [passwordFlag, setPasswordFlag] = useState(false)
     const handleLogin = () => {
-        console.log(loginData, "===========");
-
         try {
             axios
                 .post(`http://localhost:8080/customer/login`, {
@@ -44,42 +40,18 @@ const Login = () => {
                 })
                 .then((res) => {
                     if (res.status === 200) {
+                        dispatch(getUserDetails(res.data))
+                        setAlert('success', 'Successfully Logged In !');
                         history.push("/customer/profile");
                         localStorage.setItem("isLogin", res.data.loggedIn);
                     } else {
                         alert("Something Went Wrong");
-                        console.log(res, "|||||||||||||||");
                     }
                 });
         } catch (error) {
             // alert(error.);
-            console.log(error, "============");
         }
-        console.log();
     };
-    // const [values, setValues] = React.useState({
-    //     amount: '',
-    //     password: '',
-    //     weight: '',
-    //     weightRange: '',
-    //     showPassword: false,
-    // });
-
-    // const handleChange = (prop) => (event) => {
-    //     setValues({ ...values, [prop]: event.target.value });
-    // };
-
-    // const handleClickShowPassword = () => {
-    //     setValues({
-    //         ...values,
-    //         showPassword: !values.showPassword,
-    //     });
-    // };
-
-    // const handleMouseDownPassword = (event) => {
-    //     event.preventDefault();
-    // };
-
     return (
         <section className="landing">
             <div className="wrapper">
@@ -89,15 +61,6 @@ const Login = () => {
                             <div className="card mt-5">
                                 <div className="card-header bg-warning text-black text-center">
                                     <h4 className="fw-bolder">Login Form</h4>
-                                    {/* <div
-                                            style={{
-                                                width: "50%",
-                                                marginLeft: "auto",
-                                                marginRight: "auto",
-                                                marginTop: "20px",
-                                            }}
-                                        >
-                                            <Typography variant="h4">Login Form</Typography> */}
                                     <Paper elevation={3}>
                                         <Box
                                             component="form"
@@ -125,7 +88,7 @@ const Login = () => {
                                                 id="filled-basic"
                                                 label="Password"
                                                 variant="filled"
-                                                type="password"
+                                                type={passwordFlag ? "password" : "text"}
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
@@ -136,40 +99,18 @@ const Login = () => {
                                                             e.target.value,
                                                     })
                                                 }
-                                                // endAdornment={
-                                                //     <InputAdornment position="end">
-                                                //         <IconButton
-                                                //             aria-label="toggle password visibility"
-                                                //             onClick={handleClickShowPassword}
-                                                //             onMouseDown={handleMouseDownPassword}
-                                                //         >
-                                                //             {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                //         </IconButton>
-                                                //     </InputAdornment>
-                                                // }
+                                                InputProps={{
+                                                    maxLength: 20,
+                                                    endAdornment: (
+                                                        <IconButton
+                                                            style={{ padding: '0 0 0 2%' }}
+                                                            onClick={() => setPasswordFlag((prev) => !prev)}
+                                                        >
+                                                            {passwordFlag ? <VisibilityOff /> : <Visibility />}
+                                                        </IconButton>
+                                                    ),
+                                                }}
                                             />
-                                            {/* <FormControl sx={{ m: 1}} variant="standard" >
-                                                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                                                <Input
-                                                    fullWidth
-                                                    id="standard-adornment-password"
-                                                    type={values.showPassword ? 'text' : 'password'}
-                                                    value={values.password}
-                                                    onChange={handleChange('password')}
-                                                    endAdornment={
-                                                        <InputAdornment position="end">
-                                                            <IconButton
-                                                                aria-label="toggle password visibility"
-                                                                onClick={handleClickShowPassword}
-                                                                onMouseDown={handleMouseDownPassword}
-                                                            >
-                                                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                            </IconButton>
-                                                        </InputAdornment>
-                                                    }
-                                                />
-                                            </FormControl> */}
-
                                             <TextField
                                                 id="outlined-select-currency"
                                                 select

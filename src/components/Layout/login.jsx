@@ -29,7 +29,7 @@ const Login = () => {
         password: "",
         role: ""
     });
-    const [passwordFlag, setPasswordFlag] = useState(false)
+    const [passwordFlag, setPasswordFlag] = useState(true)
     const handleLogin = () => {
         try {
             axios
@@ -106,7 +106,7 @@ const Login = () => {
                                                             style={{ padding: '0 0 0 2%' }}
                                                             onClick={() => setPasswordFlag((prev) => !prev)}
                                                         >
-                                                            {passwordFlag ? <VisibilityOff /> : <Visibility />}
+                                                            {passwordFlag ? <Visibility /> : <VisibilityOff />}
                                                         </IconButton>
                                                     ),
                                                 }}

@@ -1,10 +1,10 @@
 import axios from "axios";
-import { getUserDetails } from "../actions/userDetailsAction";
+// import { getUserDetails } from "../actions/userBankDetailsAction";
 
 export const updateUserData = (payload) => {
     try {
         const response = axios.put(
-            `http://localhost:8080/customer/updateCustomer/${getUserDetails.payload.id}`, // customer id will come from redux store
+            `http://localhost:8080/customer/updateCustomer/1`, // customer id will come from redux store
             {
                 username: payload.username,
                 address: payload.address,

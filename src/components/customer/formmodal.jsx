@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography, Modal, Paper, TextField, Stack } from "@mui/material";
 import { AlertNotificationContext } from '../../alert-context/alert-state';
 import { updateUserDetail } from '../../redux/thunk/userDetailsThunk';
+import { updateUserBankDetail } from '../../redux/thunk/userBankDetailsThunk';
 import axios from 'axios';
 
 const style = {
@@ -18,10 +19,12 @@ const style = {
 };
 
 export default function FormModal(props) {
+    console.log(props, '||||||||||||||||||||||||||||')
     const { setAlert } = useContext(AlertNotificationContext);
     const dispatch = useDispatch()
-    const { userDataSuccessfullyUpdated } = useSelector((state) => state.userData)
-    const [userDetails, setUserDetails] = useState({
+    const { userDataSuccessfullyUpdated, userDetails } = useSelector((state) => state.userData)
+    const { userBankDataSuccessfullyUpdated } = useSelector((state) => state.userBankData)
+    const [userDetail, setUserDetail] = useState({
         username: '',
         email: '',
         mobileNo: '',
@@ -29,29 +32,41 @@ export default function FormModal(props) {
     })
 
     const [bankDetails, setUserBankDetails] = useState({
-        bankName: '',
-        accountNo: '',
+        bankName: userDetails?.bank?.bankName || '',
+        accountNo: userDetails?.bank?.bankName || '',
         confirmAccountNo: '',
-        ifscNo: '',
-        pan: '',
-        address:''
+        ifscNo: userDetails?.bank?.bankName || '',
+        pan: userDetails?.bank?.bankName || '',
+        address: userDetails?.bank?.bankName || ''
     })
 
     const [gasBookingDetails, setUserGasBookingDetails] = useState({
-        username: "",
-        email: "",
-        mobileNo: "",
-        address: "",
-        accountNo: ""
+        username: userDetails?.username || '',
+        email: userDetails?.email || '',
+        mobileNo: userDetails?.mobileNumber || '',
+        address: userDetails?.address || '',
+        accountNo: userDetails?.bank?.accountNo || ''
     })
 
     const handleUserDetailsUpdater = () => {
         dispatch(updateUserDetail(
             {
-                "username": userDetails.username,
-                "address": userDetails.address,
-                "mobileNumber": userDetails.mobileNo,
-                "email": userDetails.email,
+                "username": userDetail.username,
+                "address": userDetail.address,
+                "mobileNumber": userDetail.mobileNo,
+                "email": userDetail.email,
+            }
+        ))
+    }
+    const handleUserBankDetailsUpdater = () => {
+        dispatch(updateUserBankDetail(
+            {
+                "bankName": bankDetails.bankName,
+                "accountNo": bankDetails.accountNo,
+                "confirmAccountNo": bankDetails.confirmAccountNo,
+                "ifscNo": bankDetails.ifscNo,
+                "pan": bankDetails.pan,
+                "address": bankDetails.address
             }
         ))
     }
@@ -59,30 +74,48 @@ export default function FormModal(props) {
         if (userDataSuccessfullyUpdated) {
             setAlert('success', 'Successfully Updated!')
         }
-    }, [userDataSuccessfullyUpdated]);
+        if (userBankDataSuccessfullyUpdated) {
+            setAlert('success', 'Successfully Updated Bank Details !')
+        }
+    }, [userDataSuccessfullyUpdated, userBankDataSuccessfullyUpdated]);
 
-    const handleUserBankDetails = () => {
-        console.log(bankDetails);
-        const dataUrl = `http://localhost:8080/bank/profile/insertBank/2`;
-        axios.post(dataUrl,
-            {
-                bankName: bankDetails.bankName,
-                accountNo: bankDetails.accountNo,
-                confirmAccountNo: bankDetails.confirmAccountNo,
-                ifscNo: bankDetails.ifscNo,
-                pan: bankDetails.pan,
-                address: bankDetails.address,
-        }).then((res) => {
-            console.log(res);
-        })
+    // const handleUserBankDetails = () => {
+    //     console.log(bankDetails);
+    //     const dataUrl = `http://localhost:8080/bank/profile/insertBank/2`;
+    //     axios.post(dataUrl,
+    //         {
+    //             bankName: bankDetails.bankName,
+    //             accountNo: bankDetails.accountNo,
+    //             confirmAccountNo: bankDetails.confirmAccountNo,
+    //             ifscNo: bankDetails.ifscNo,
+    //             pan: bankDetails.pan,
+    //             address: bankDetails.address,
+    //     }).then((res) => {
+    //         console.log(res);
+    //     })
 
-    }
+    // }
 
     const handleUserGasBookingDetails = () => {
         console.log(gasBookingDetails);
-        const dataUrl = `http://localhost:8080/customer/profile/addCustomerWithCylinder/2/8`;
+        const autoGenerateCylinderID = props.cylinderDetails[Math.floor(Math.random() * props.cylinderDetails.length)]
+        console.log(autoGenerateCylinderID);
+        const dataUrl = `http://localhost:8080/customer/profile/addCustomerWithCylinder/${userDetails?.id}/${autoGenerateCylinderID?.cylinderId}`;
         axios.put(dataUrl).then((res) => {
             console.log(res);
+            // give setAlert
+            if (res.status === 200) {
+                setAlert('success', 'Successfully Logged In !');
+                setUserGasBookingDetails({
+                    username: '',
+                    email: '',
+                    mobileNo: '',
+                    address: '',
+                    accountNo: ''
+                })
+                props.handleClose()
+
+            }
         })
     }
 
@@ -122,6 +155,7 @@ export default function FormModal(props) {
                                         style={{ marginBottom: 10 }}
                                         fullWidth
                                         required
+                                        value={gasBookingDetails?.username || ''}
                                         onChange={(e) =>
                                             setUserGasBookingDetails({
                                                 ...gasBookingDetails,
@@ -138,6 +172,7 @@ export default function FormModal(props) {
                                         fullWidth
                                         style={{ marginBottom: 10 }}
                                         required
+                                        value={gasBookingDetails.email || ''}
                                         onChange={(e) =>
                                             setUserGasBookingDetails({
                                                 ...gasBookingDetails,
@@ -154,6 +189,7 @@ export default function FormModal(props) {
                                         fullWidth
                                         style={{ marginBottom: 10 }}
                                         required
+                                        value={gasBookingDetails?.mobileNo || ''}
                                         onChange={(e) =>
                                             setUserGasBookingDetails({
                                                 ...gasBookingDetails,
@@ -171,6 +207,7 @@ export default function FormModal(props) {
                                         fullWidth
                                         required
                                         style={{ marginBottom: 10 }}
+                                        value={gasBookingDetails?.address}
                                         onChange={(e) =>
                                             setUserGasBookingDetails({
                                                 ...gasBookingDetails,
@@ -187,6 +224,7 @@ export default function FormModal(props) {
                                         fullWidth
                                         required
                                         style={{ marginBottom: 10 }}
+                                        value={gasBookingDetails?.accountNo}
                                         onChange={(e) =>
                                             setUserGasBookingDetails({
                                                 ...gasBookingDetails,
@@ -254,8 +292,8 @@ export default function FormModal(props) {
                                         fullWidth
                                         required
                                         onChange={(e) =>
-                                            setUserDetails({
-                                                ...userDetails,
+                                            setUserDetail({
+                                                ...userDetail,
                                                 username:
                                                     e.target.value,
                                             })
@@ -270,8 +308,8 @@ export default function FormModal(props) {
                                         style={{ marginBottom: 10 }}
                                         required
                                         onChange={(e) =>
-                                            setUserDetails({
-                                                ...userDetails,
+                                            setUserDetail({
+                                                ...userDetail,
                                                 email:
                                                     e.target.value,
                                             })
@@ -285,8 +323,8 @@ export default function FormModal(props) {
                                         style={{ marginBottom: 10 }}
                                         required
                                         onChange={(e) =>
-                                            setUserDetails({
-                                                ...userDetails,
+                                            setUserDetail({
+                                                ...userDetail,
                                                 mobileNo:
                                                     e.target.value,
                                             })
@@ -302,8 +340,8 @@ export default function FormModal(props) {
                                         required
                                         style={{ marginBottom: 10 }}
                                         onChange={(e) =>
-                                            setUserDetails({
-                                                ...userDetails,
+                                            setUserDetail({
+                                                ...userDetail,
                                                 address:
                                                     e.target.value,
                                             })
@@ -436,28 +474,28 @@ export default function FormModal(props) {
                                                     e.target.value,
                                             })
                                         }
-                                        />
-                                        <TextField
-                                            id="filled-basic"
-                                            label="Address"
-                                            variant="filled"
-                                            type="text"
-                                            fullWidth
-                                            style={{ marginBottom: 10 }}
-                                            required
-                                            onChange={(e) =>
-                                                setUserBankDetails({
-                                                    ...bankDetails,
-                                                    address:
-                                                        e.target.value,
-                                                })
-                                            }
-                                        />
+                                    />
+                                    <TextField
+                                        id="filled-basic"
+                                        label="Address"
+                                        variant="filled"
+                                        type="text"
+                                        fullWidth
+                                        style={{ marginBottom: 10 }}
+                                        required
+                                        onChange={(e) =>
+                                            setUserBankDetails({
+                                                ...bankDetails,
+                                                address:
+                                                    e.target.value,
+                                            })
+                                        }
+                                    />
                                     <Stack spacing={2} direction="row">
                                         <Button
                                             variant="contained"
                                             style={{ marginTop: "10px" }}
-                                            onClick={handleUserBankDetails}
+                                            onClick={handleUserBankDetailsUpdater}
                                         >
                                             Add
                                         </Button>

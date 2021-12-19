@@ -33,7 +33,21 @@ const Register = () => {
     });
 
     const handleRegister = () => {
-        console.log(registerData, "===========");
+        if (!registerData.username.length) {
+            return alert('username cannnot be blank')
+        }
+        if (!registerData.email.length) {
+            return alert('username cannnot be blank')
+        }
+        if (!registerData.password.length) {
+            return alert('username cannnot be blank')
+        }
+        if (!registerData.address.length) {
+            return alert('username cannnot be blank')
+        }
+        if (!registerData.role.length) {
+            return alert('username cannnot be blank')
+        }
         axios
             .post(`http://localhost:8080/customer/addCustomer`, {
                 username: registerData.username,
@@ -60,15 +74,7 @@ const Register = () => {
                                     <h4 className="fw-bolder">
                                         Registration Form
                                     </h4>
-                                    {/* <div
-            style={{
-                width: "50%",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: "20px",
-            }}
-        >
-            <Typography variant="h4">Register Form</Typography> */}
+
                                     <Paper elevation={3}>
                                         <Box
                                             component="form"
@@ -142,7 +148,7 @@ const Register = () => {
                                             />
                                             <TextField
                                                 id="filled-basic"
-                                                label="Confirm Password"
+                                                // label="Confirm Password"
                                                 variant="filled"
                                                 type="password"
                                                 fullWidth
@@ -155,7 +161,9 @@ const Register = () => {
                                                             e.target.value,
                                                     })
                                                 }
+                                                label={registerData?.password !== registerData?.confirmPassword ? "Error" : "Confirm Password"}
                                             />
+                                            {/* {registerData?.password?.length && <span>{registerData?.password === registerData?.confirmPassword ? "Matched" : "not matched"}</span>} */}
                                             <TextField
                                                 id="filled-basic"
                                                 label="Address(Optional)"

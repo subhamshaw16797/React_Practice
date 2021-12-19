@@ -4,7 +4,7 @@ import {
     Card,
     Typography,
 } from "@mui/material";
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import ModeEditTwoToneIcon from "@mui/icons-material/ModeEditTwoTone";
 import FormModal from './formmodal';
 

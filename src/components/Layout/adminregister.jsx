@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import Joi, { errors, schema } from 'joi-browser'
-// import { useHistory } from "react-router-dom";
+import axios from 'axios';
 import {
     TextField,
     Box,
@@ -23,7 +21,7 @@ const AdminRegister = () => {
         },
     ]
     const [registerData, setRegisterData] = useState({
-        userName: '',
+        username: '',
         email: '',
         mobileNumber: '',
         password: '',
@@ -66,7 +64,7 @@ const AdminRegister = () => {
     const handleRegister = () => {
         //this.setState({ errors: this.validate() })
         console.log(registerData, '===========')
-        if (!registerData.userName.length) {
+        if (!registerData.username.length) {
             return alert('username cannnot be blank')
         }
         if (!registerData.email.length) {
@@ -92,7 +90,7 @@ const AdminRegister = () => {
 
         axios
             .post('http://localhost:8080/admin/insert', {
-                userName: registerData.userName,
+                username: registerData.username,
                 email: registerData.email,
                 mobileNumber: registerData.mobileNumber,
                 password: registerData.password,

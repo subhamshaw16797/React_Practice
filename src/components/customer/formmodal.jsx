@@ -19,7 +19,6 @@ const style = {
 };
 
 export default function FormModal(props) {
-    // console.log(props, '||||||||||||||||||||||||||||')
     const { setAlert } = useContext(AlertNotificationContext);
     const dispatch = useDispatch();
     const { userDataSuccessfullyUpdated, userDetails } = useSelector((state) => state.userData)
@@ -62,7 +61,6 @@ export default function FormModal(props) {
     const handleUserBankDetailsUpdater = () => {
         dispatch(updateUserBankDetail(
             {
-                "id" : userDetails.id,
                 "bankName": bankDetails.bankName,
                 "accountNo": bankDetails.accountNo,
                 "confirmAccountNo": bankDetails.confirmAccountNo,
@@ -81,31 +79,40 @@ export default function FormModal(props) {
         }
     }, [userDataSuccessfullyUpdated, userBankDataSuccessfullyUpdated]);
 
-    // const handleUserBankDetails = () => {
-    //     console.log(bankDetails);
-    //     const dataUrl = `http://localhost:8080/bank/profile/insertBank/2`;
-    //     axios.post(dataUrl,
-    //         {
-    //             bankName: bankDetails.bankName,
-    //             accountNo: bankDetails.accountNo,
-    //             confirmAccountNo: bankDetails.confirmAccountNo,
-    //             ifscNo: bankDetails.ifscNo,
-    //             pan: bankDetails.pan,
-    //             address: bankDetails.address,
-    //     }).then((res) => {
-    //         console.log(res);
-    //     })
-
-    // }
-
     const handleUserGasBookingDetails = () => {
-        console.log(gasBookingDetails);
+        if (!gasBookingDetails.username.length) {
+            return setAlert('warning', 'Username cannnot be blank')
+
+        }
+        if (gasBookingDetails.username.length <= 7) {
+            return setAlert('warning', 'Username should be greater than 8 character')
+        }
+        if (!gasBookingDetails.email.length) {
+            return setAlert('warning', 'Email cannnot be blank')
+        }
+        if (!gasBookingDetails.mobileNo.length) {
+            return setAlert('warning', 'Mobile Number cannnot be blank')
+        }
+        if (gasBookingDetails.mobileNo.length <= 9) {
+            return setAlert('warning', 'Mobile Number should be 10 digit')
+        }
+        if (!gasBookingDetails.address.length) {
+            return setAlert('warning', 'Address cannnot be blank')
+        }
+        if (gasBookingDetails.address.length <= 6) {
+            return setAlert('warning', 'Give Proper Address !')
+        }
+        if (!gasBookingDetails.accountNo.length) {
+            return setAlert('warning', 'role cannnot be blank')
+        }
+        if (!gasBookingDetails.accountNo.length <= 5) {
+            return setAlert('warning', 'Account Number should be greater than 5 digit !')
+        }
         const autoGenerateCylinderID = props.cylinderDetails[Math.floor(Math.random() * props.cylinderDetails.length)]
         console.log(autoGenerateCylinderID);
         const dataUrl = `http://localhost:8080/customer/profile/addCustomerWithCylinder/${userDetails?.id}/${autoGenerateCylinderID?.cylinderId}`;
         axios.put(dataUrl).then((res) => {
             console.log(res);
-            // give setAlert
             if (res.status === 200) {
                 setAlert('success', 'Successfully Booked Gas !');
                 setUserGasBookingDetails({
@@ -120,7 +127,6 @@ export default function FormModal(props) {
             }
         })
     }
-
     return (
         <>
             {

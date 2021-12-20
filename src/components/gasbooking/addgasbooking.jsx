@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import Joi from "joi-browser";
 class AddGasBooking extends React.Component {

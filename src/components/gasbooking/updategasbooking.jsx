@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
-import Joi from "joi-browser";
+import Joi from 'joi-browser';
 class UpdateGasBooking extends React.Component {
   state = {
     gasbooking: {
@@ -11,7 +11,7 @@ class UpdateGasBooking extends React.Component {
       bill: "950",
     },
     errors: {},
-    errMsg: "",
+    // errMsg: "",
   };
   schema = {
     gasBookingId:Joi.number().integer(),

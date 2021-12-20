@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import Joi from "joi-browser";
 class GetBill extends React.Component {
@@ -58,7 +58,7 @@ class GetBill extends React.Component {
   };
   render() {
     const customerId = this.state.customerId;
-    const { errors, errMsg } = this.state;
+    const { errors} = this.state;
     return (
       <div>
         

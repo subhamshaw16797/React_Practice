@@ -1,10 +1,9 @@
 import axios from "axios";
-// import { getUserBankDetails } from "../actions/userBankDetailsAction";
 
 export const updateUserBankData = (payload) => {
     try {
         const response = axios.post(
-            `http://localhost:8080/bank/profile/insertBank/${payload.id}`,
+            `http://localhost:8080/bank/profile/insertBank/35`,
             {
                 bankName: payload.bankName,
                 accountNo: payload.accountNo,

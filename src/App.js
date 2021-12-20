@@ -22,8 +22,6 @@ import AlertNotificationProvider from "./alert-context/alert-state";
 
 import AdminProfileDetails from "./components/admin/adminprofiledetails1";
 import AdminManagement from "./components/admin/adminmanagementsection";
-import AdminLogin from "./components/layout/adminlogin";
-import AdminRegister from "./components/layout/adminregister";
 import IdBookings from './components/admin/idbookings';
 import BetweenBookings from "./components/admin/idbookings";
 
@@ -96,8 +94,6 @@ function App() {
                     <Route exact path="/contactus" component={ContactUs} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/login" component={Login} />
-                    <Route exact path="/adminLogin" component={AdminLogin} />
-                    <Route exact path="/adminRegister" component={AdminRegister} />
                     <Route exact path="/register" component={Register} />
                     <Redirect exact path="/" to="/home" />
                     <Route component={PageNotFound} />

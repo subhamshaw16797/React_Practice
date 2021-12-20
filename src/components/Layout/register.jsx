@@ -42,38 +42,65 @@ const Register = () => {
 
     const handleRegister = () => {
         if (!registerData.username.length) {
-            return alert('username cannnot be blank')
+            return setAlert('warning', 'Username cannnot be blank')
+            
+        }
+        if (registerData.username.length <= 7) {
+            return setAlert('warning', 'Username should be greater than 8 character')
         }
         if (!registerData.email.length) {
-            return alert('username cannnot be blank')
+            return setAlert('warning','Email cannnot be blank')
         }
         if (!registerData.password.length) {
-            return alert('username cannnot be blank')
+            return setAlert('warning','Password cannnot be blank')
         }
-        if (!registerData.address.length) {
-            return alert('username cannnot be blank')
+        if (registerData.password.length <=3 ) {
+            return setAlert('warning', 'Password should be greater than 4 character')
         }
         if (!registerData.role.length) {
-            return alert('username cannnot be blank')
+            return setAlert('warning','role cannnot be blank')
         }
-        axios
-            .post(`http://localhost:8080/customer/addCustomer`, {
-                username: registerData.username,
-                email: registerData.email,
-                mobileNumber: registerData.mobileNumber,
-                password: registerData.password,
-                confirmPassword: registerData.confirmPassword,
-                address: registerData.address,
-                role: registerData.role,
-            })
-            .then((res) => {
-                if (res.status === 201) {
-                    setAlert('success', 'Registered Successfully !');
-                    history.push("/login");
-                } else {
-                    setAlert('error', "Something Went Wrong");
-                };
-            });
+        if (registerData.role === "Customer") {
+            axios
+                .post(`http://localhost:8080/customer/addCustomer`, {
+                    username: registerData.username,
+                    email: registerData.email,
+                    mobileNumber: registerData.mobileNumber,
+                    password: registerData.password,
+                    confirmPassword: registerData.confirmPassword,
+                    address: registerData.address,
+                    role: registerData.role,
+                })
+                .then((res) => {
+                    if (res.status === 201) {
+                        setAlert('success', 'Customer Registered Successfully !');
+                        history.push("/login");
+                    } else {
+                        setAlert('error', "Something Went Wrong");
+                    };
+                });
+        }
+        if (registerData.role === "Admin") {
+            axios
+                .post('http://localhost:8080/admin/insert', {
+                    username: registerData.username,
+                    email: registerData.email,
+                    mobileNumber: registerData.mobileNumber,
+                    password: registerData.password,
+                    confirmPassword: registerData.confirmPassword,
+                    address: registerData.address,
+                    role: registerData.role,
+                })
+                .then((res) => {
+                    if (res.status === 201) {
+                        setAlert('success', 'Admin Registered Successfully !');
+                        history.push("/login");
+                    } else {
+                        setAlert('error', "Something Went Wrong");
+                    };
+                })
+        }
+        
     };
 
     return (

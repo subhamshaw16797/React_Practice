@@ -38,7 +38,6 @@ const AdminLogin = () => {
     const [passwordFlag, setPasswordFlag] = useState(false)
     const handleLogin = () => {
         try {
-            console.log('coming')
             axios
                 .post(`http://localhost:8080/admin/login`, {
                     username: loginData.username,

@@ -96,27 +96,14 @@ const NavBar = () => {
                                     :
                                     <NavLink className="nav-link" exact to="/login">
                                         <i class="fas fa-sign-in-alt" />&nbsp;
-                                        Customer Login
+                                        Login
                                     </NavLink>
                                 }
                             </li>
                             {!isLoggedIn && <li className="nav-item">
-                                <NavLink className="nav-link" exact to='/adminLogin'>
-                                    <i class="fas fa-users" />&nbsp;
-                                    Admin Login
-                                </NavLink>
-                            </li>}
-                            {!isLoggedIn && <li className="nav-item">
                                 <NavLink className="nav-link" exact to="/register">
                                     <i class="fas fa-user-plus" />&nbsp;
-                                    Customer Register
-                                </NavLink>
-                            </li>
-                            }
-                            {!isLoggedIn && <li className="nav-item">
-                                <NavLink className="nav-link" exact to="/adminRegister">
-                                    <i class="fas fa-user-plus" />&nbsp;
-                                    Admin Register
+                                    Register
                                 </NavLink>
                             </li>
                             }

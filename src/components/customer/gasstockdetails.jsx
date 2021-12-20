@@ -4,8 +4,7 @@ import {
     CardContent,
     Card,
     CardActions,
-    Typography,
-    // Paper
+    Typography
 } from "@mui/material";
 import FormModal from './formmodal';
 import axios from 'axios';
@@ -14,27 +13,6 @@ function GasStockDetails() {
     const [open, setOpen] = React.useState(false);
     const handleGasBookModalOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    // const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    //     [`&.${tableCellClasses.head}`]: {
-    //         backgroundColor: theme.palette.common.black,
-    //         color: theme.palette.common.white,
-    //     },
-    //     [`&.${tableCellClasses.body}`]: {
-    //         fontSize: 14,
-    //     },
-    // }));
-
-    // const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    //     '&:nth-of-type(odd)': {
-    //         backgroundColor: theme.palette.action.hover,
-    //     },
-    //     // hide last border
-    //     '&:last-child td, &:last-child th': {
-    //         border: 0,
-    //     },
-    // }));
-
     const [cylinderDetails, setCylinderDetails] = useState([])
 
     useEffect(() => {
@@ -80,31 +58,6 @@ function GasStockDetails() {
                 cylinderDetails={cylinderDetails}
             />
         </Card>
-
-        // <TableContainer component={Paper} style={{ marginTop: "27px", marginRight: "20px" }}>
-        //     <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        //         <TableHead>
-        //             <TableRow>
-        //                 <StyledTableCell align="right">Cylinder ID</StyledTableCell>
-        //                 <StyledTableCell align="right">Gas Type</StyledTableCell>
-        //                 <StyledTableCell align="right">Weight</StyledTableCell>
-        //                 <StyledTableCell align="right">Color</StyledTableCell>
-        //                 <StyledTableCell align="right">Price</StyledTableCell>
-        //             </TableRow>
-        //         </TableHead>
-        //         <TableBody>
-        //             {cylinderDetails.map((c) => (
-        //                 <StyledTableRow key={c.name}>
-        //                     <StyledTableCell align="right">{c.cylinderId}</StyledTableCell>
-        //                     <StyledTableCell align="right">{c.type}</StyledTableCell>
-        //                     <StyledTableCell align="right">{c.weight}</StyledTableCell>
-        //                     <StyledTableCell align="right">{c.strapColor}</StyledTableCell>
-        //                     <StyledTableCell align="right">{c.price}</StyledTableCell>
-        //                 </StyledTableRow>
-        //             ))}
-        //         </TableBody>
-        //     </Table>
-        // </TableContainer>
     )
 }
 

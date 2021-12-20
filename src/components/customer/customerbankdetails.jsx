@@ -12,7 +12,6 @@ function CustomerBankDetails() {
     const [open, setOpen] = React.useState(false);
     const handleGasBookModalOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    // const { userBankDetails: { bankName, accountNo, ifscNo, pan, address } } = useSelector((state) => state.userBankData)
     const { userDetails } = useSelector((state) => state.userData)
     return (
         <>

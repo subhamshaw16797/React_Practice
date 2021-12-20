@@ -5,6 +5,7 @@ import { TextField, Box, MenuItem, Paper, Button, IconButton } from "@mui/materi
 import axios from "axios";
 import { AlertNotificationContext } from '../../alert-context/alert-state';
 import { getUserDetails } from '../../redux/actions/userDetailsAction';
+import { getAdminDetails } from '../../redux/actions/adminDetailsAction';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
@@ -31,27 +32,68 @@ const Login = () => {
     });
     const [passwordFlag, setPasswordFlag] = useState(true);
     const handleLogin = () => {
-        try {
-            axios
-                .post(`http://localhost:8080/customer/login`, {
-                    username: loginData.username,
-                    password: loginData.password,
-                    role: loginData.role,
-                })
-                .then((res) => {
-                    if (res.status === 200) {
-                        dispatch(getUserDetails(res.data))
-                        setAlert('success', 'Successfully Logged In !');
-                        history.push("/customer/profile");
-                        localStorage.setItem("isLogin", res.data.loggedIn);
-                    } else {
-                        setAlert('error', "User name is not present. Please Register !");
-                        history.push("/register");
-                    }
-                });
-        } catch (error) {
-            // alert(error.);
+        if (!loginData.username.length) {
+            return setAlert('warning', 'Username cannnot be blank')
+
         }
+        if (loginData.username.length <= 7) {
+            return setAlert('warning', 'Username should be greater than 8 character')
+        }
+        if (!loginData.password.length) {
+            return setAlert('warning', 'Password cannnot be blank')
+        }
+        if (loginData.password.length <= 3) {
+            return setAlert('warning', 'Password should be greater than 4 character')
+        }
+        if (!loginData.role.length) {
+            return setAlert('warning', 'role cannnot be blank')
+        }
+        if (loginData.role === "Customer") {
+            try {
+                axios
+                    .post(`http://localhost:8080/customer/login`, {
+                        username: loginData.username,
+                        password: loginData.password,
+                        role: loginData.role,
+                    })
+                    .then((res) => {
+                        if (res.status === 200) {
+                            dispatch(getUserDetails(res.data))
+                            setAlert('success', 'Successfully Logged In !');
+                            history.push("/customer/profile");
+                            localStorage.setItem("isLogin", res.data.loggedIn);
+                        } else {
+                            setAlert('error', "User name is not present. Please Register !");
+                            history.push("/register");
+                        }
+                    });
+            } catch (error) {
+                // alert(error.);
+            }
+        }
+        if (loginData.role === "Admin") {
+            try {
+                axios
+                    .post(`http://localhost:8080/admin/login`, {
+                        username: loginData.username,
+                        password: loginData.password,
+                        role: loginData.role,
+                    })
+                    .then((res) => {
+                        console.log('coming')
+                        if (res.status === 200) {
+                            dispatch(getAdminDetails(res.data))
+                            setAlert('success', 'Successfully Logged In !')
+                            history.push('/adminmanagement')
+                            localStorage.setItem('isLogin', res.data.loggedIn)
+                        } else {
+                            alert('Something Went Wrong')
+                        }
+                    })
+            } catch (error) {
+                // alert(error.);
+            }
+        }    
     };
     return (
         <section className="landing">

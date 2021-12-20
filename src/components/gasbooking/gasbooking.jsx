@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 class GasBooking extends React.Component {
@@ -28,7 +28,7 @@ class GasBooking extends React.Component {
         console.log(res);
         // Update front end parallely
         const gasbookings = this.state.gasbookings.filter(
-          (g) => g.gasBookingId != gasBookingId
+          (g) => g.gasBookingId !== gasBookingId
         );
         this.setState({ gasbookings: gasbookings });
         alert(res.data.gasBookingId + " deleted succussfully!");

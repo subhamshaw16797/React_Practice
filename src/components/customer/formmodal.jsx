@@ -19,16 +19,16 @@ const style = {
 };
 
 export default function FormModal(props) {
-    console.log(props, '||||||||||||||||||||||||||||')
+    // console.log(props, '||||||||||||||||||||||||||||')
     const { setAlert } = useContext(AlertNotificationContext);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { userDataSuccessfullyUpdated, userDetails } = useSelector((state) => state.userData)
-    const { userBankDataSuccessfullyUpdated } = useSelector((state) => state.userBankData)
+    const { userBankDataSuccessfullyUpdated} = useSelector((state) => state.userBankData)
     const [userDetail, setUserDetail] = useState({
-        username: '',
-        email: '',
-        mobileNo: '',
-        address: ''
+        username: userDetails?.username || '',
+        email: userDetails?.email || '',
+        mobileNo: userDetails?.mobileNumber || '',
+        address: userDetails?.address || '',
     })
 
     const [bankDetails, setUserBankDetails] = useState({
@@ -51,6 +51,7 @@ export default function FormModal(props) {
     const handleUserDetailsUpdater = () => {
         dispatch(updateUserDetail(
             {
+                "id" : userDetails.id,
                 "username": userDetail.username,
                 "address": userDetail.address,
                 "mobileNumber": userDetail.mobileNo,
@@ -61,6 +62,7 @@ export default function FormModal(props) {
     const handleUserBankDetailsUpdater = () => {
         dispatch(updateUserBankDetail(
             {
+                "id" : userDetails.id,
                 "bankName": bankDetails.bankName,
                 "accountNo": bankDetails.accountNo,
                 "confirmAccountNo": bankDetails.confirmAccountNo,
@@ -72,10 +74,10 @@ export default function FormModal(props) {
     }
     useEffect(() => {
         if (userDataSuccessfullyUpdated) {
-            setAlert('success', 'Successfully Updated!')
+            setAlert('success', 'Profile Updated Successfully!');
         }
         if (userBankDataSuccessfullyUpdated) {
-            setAlert('success', 'Successfully Updated Bank Details !')
+            setAlert('success', 'Successfully Updated Bank Details !');
         }
     }, [userDataSuccessfullyUpdated, userBankDataSuccessfullyUpdated]);
 
@@ -105,7 +107,7 @@ export default function FormModal(props) {
             console.log(res);
             // give setAlert
             if (res.status === 200) {
-                setAlert('success', 'Successfully Logged In !');
+                setAlert('success', 'Successfully Booked Gas !');
                 setUserGasBookingDetails({
                     username: '',
                     email: '',
@@ -247,7 +249,7 @@ export default function FormModal(props) {
                                             style={{ marginTop: "10px" }}
                                             onClick={props.handleCloseGasModal}
                                         >
-                                            Cancle
+                                                Cancel
                                         </Button>
                                     </Stack>
                                 </Box>
@@ -359,7 +361,7 @@ export default function FormModal(props) {
                                             style={{ marginTop: "10px" }}
                                             onClick={props.handleCloseGasModal}
                                         >
-                                            Cancle
+                                            Cancel
                                         </Button>
                                     </Stack>
                                 </Box>
@@ -504,7 +506,7 @@ export default function FormModal(props) {
                                             style={{ marginTop: "10px" }}
                                             onClick={props.handleCloseGasModal}
                                         >
-                                            Cancle
+                                                Cancel
                                         </Button>
                                     </Stack>
                                 </Box>

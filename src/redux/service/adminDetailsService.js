@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const updateUserData = (payload) => {
+export const updateAdminData = (payload) => {
     try {
         const response = axios.put(
-            `http://localhost:8080/customer/updateCustomer/${payload.id}`,
+            `http://localhost:8080/admin/update/${payload.id}`,
             {
                 username: payload.username,
                 address: payload.address,

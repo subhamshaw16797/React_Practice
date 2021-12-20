@@ -1,58 +1,65 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { TextField, Box, MenuItem, Paper, Button, IconButton } from "@mui/material";
-import axios from "axios";
+import {
+    TextField,
+    Box,
+    MenuItem,
+    Paper,
+    Button,
+    IconButton,
+} from '@mui/material'
+import axios from 'axios'
 import { AlertNotificationContext } from '../../alert-context/alert-state';
-import { getUserDetails } from '../../redux/actions/userDetailsAction';
+import { getAdminDetails } from '../../redux/actions/adminDetailsAction';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const Login = () => {
-
-    const { setAlert } = useContext(AlertNotificationContext);
+const AdminLogin = () => {
+    const { setAlert } = useContext(AlertNotificationContext)
     const dispatch = useDispatch()
-    const history = useHistory();
+    const history = useHistory()
     const roles = [
         {
-            value: "Admin",
-            label: "Admin",
+            value: 'Admin',
+            label: 'Admin',
         },
         {
-            value: "Customer",
-            label: "Customer",
+            value: 'Customer',
+            label: 'Customer',
         },
-    ];
+    ]
 
     const [loginData, setLoginData] = useState({
-        username: "",
-        password: "",
-        role: ""
-    });
-    const [passwordFlag, setPasswordFlag] = useState(true);
+        username: '',
+        password: '',
+        role: '',
+    })
+    const [passwordFlag, setPasswordFlag] = useState(false)
     const handleLogin = () => {
         try {
+            console.log('coming')
             axios
-                .post(`http://localhost:8080/customer/login`, {
+                .post(`http://localhost:8080/admin/login`, {
                     username: loginData.username,
                     password: loginData.password,
                     role: loginData.role,
                 })
                 .then((res) => {
+                    console.log('coming')
                     if (res.status === 200) {
-                        dispatch(getUserDetails(res.data))
-                        setAlert('success', 'Successfully Logged In !');
-                        history.push("/customer/profile");
-                        localStorage.setItem("isLogin", res.data.loggedIn);
+                        dispatch(getAdminDetails(res.data))
+                        setAlert('success', 'Successfully Logged In !')
+                        history.push('/adminmanagement')
+                        localStorage.setItem('isLogin', res.data.loggedIn)
                     } else {
-                        setAlert('error', "User name is not present. Please Register !");
-                        history.push("/register");
+                        alert('Something Went Wrong')
                     }
-                });
+                })
         } catch (error) {
             // alert(error.);
         }
-    };
+    }
     return (
         <section className="landing">
             <div className="wrapper">
@@ -71,7 +78,7 @@ const Login = () => {
                                         >
                                             <TextField
                                                 id="filled-basic"
-                                                label="Username"
+                                                label="User Name"
                                                 variant="filled"
                                                 type="text"
                                                 style={{ marginBottom: 10 }}
@@ -80,8 +87,7 @@ const Login = () => {
                                                 onChange={(e) =>
                                                     setLoginData({
                                                         ...loginData,
-                                                        username:
-                                                            e.target.value,
+                                                        username: e.target.value,
                                                     })
                                                 }
                                             />
@@ -89,15 +95,14 @@ const Login = () => {
                                                 id="filled-basic"
                                                 label="Password"
                                                 variant="filled"
-                                                type={passwordFlag ? "password" : "text"}
+                                                type={passwordFlag ? 'password' : 'text'}
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
                                                 onChange={(e) =>
                                                     setLoginData({
                                                         ...loginData,
-                                                        password:
-                                                            e.target.value,
+                                                        password: e.target.value,
                                                     })
                                                 }
                                                 InputProps={{
@@ -107,7 +112,11 @@ const Login = () => {
                                                             style={{ padding: '0 0 0 2%' }}
                                                             onClick={() => setPasswordFlag((prev) => !prev)}
                                                         >
-                                                            {passwordFlag ? <Visibility /> : <VisibilityOff />}
+                                                            {passwordFlag ? (
+                                                                <VisibilityOff />
+                                                            ) : (
+                                                                <Visibility />
+                                                            )}
                                                         </IconButton>
                                                     ),
                                                 }}
@@ -127,10 +136,7 @@ const Login = () => {
                                                 }
                                             >
                                                 {roles.map((option) => (
-                                                    <MenuItem
-                                                        key={option.value}
-                                                        value={option.value}
-                                                    >
+                                                    <MenuItem key={option.value} value={option.value}>
                                                         {option.label}
                                                     </MenuItem>
                                                 ))}
@@ -138,7 +144,7 @@ const Login = () => {
                                             <Button
                                                 variant="contained"
                                                 fullWidth
-                                                style={{ marginTop: "10px" }}
+                                                style={{ marginTop: '10px' }}
                                                 onClick={handleLogin}
                                             >
                                                 Login
@@ -152,7 +158,7 @@ const Login = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Login;
+export default AdminLogin;

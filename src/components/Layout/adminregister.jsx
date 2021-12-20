@@ -1,64 +1,98 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
-import { AlertNotificationContext } from '../../alert-context/alert-state';
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react'
+import axios from 'axios'
+import Joi, { errors, schema } from 'joi-browser'
+// import { useHistory } from "react-router-dom";
 import {
     TextField,
     Box,
     MenuItem,
     Paper,
     Button,
-    IconButton 
-} from "@mui/material";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+    // Typography,
+} from '@mui/material'
 
-const Register = () => {
-    const { setAlert } = useContext(AlertNotificationContext);
-    const history = useHistory();
+const AdminRegister = () => {
     const roles = [
         {
-            value: "Admin",
-            label: "Admin",
+            value: 'Admin',
+            label: 'Admin',
         },
         {
-            value: "Customer",
-            label: "Customer",
+            value: 'Customer',
+            label: 'Customer',
         },
-    ];
-
-    const [passwordFlag, setPasswordFlag] = useState(true);
-    const [passwordFlag1, setPasswordFlag1] = useState(true);
-
+    ]
     const [registerData, setRegisterData] = useState({
-        username: "",
-        email: "",
-        mobileNumber: "",
-        password: "",
-        confirmPassword: "",
-        address: "",
-        role: "",
-    });
+        userName: '',
+        email: '',
+        mobileNumber: '',
+        password: '',
+        confirmPassword: '',
+        address: '',
+        role: '',
+    })
+
+    // const [putErrors, setErrors] = useState({
+    //   errors: {},
+    // })
+
+    // schema = {
+    //   userName: Joi.string().min(3).max(20).required(),
+    //   password: Joi.string().min(3).required(),
+    //   address: Joi.string().min(3).max(20).required(),
+    //   mobileNumber: Joi.number()
+    //     .integer()
+    //     .min(9999999990)
+    //     .max(9999999999)
+    //     .required(),
+    //   email: Joi.string()
+    //     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    //     .required(),
+    // }
+    // // Step 3: Validate user input with schema
+    // validate = () => {
+    //   const errors = {}
+    //   const result = Joi.validate(registerData, schema, {
+    //     abortEarly: false,
+    //   })
+    //   console.log(result)
+    //   if (result.error != null)
+    //     for (let item of result.error.details) {
+    //       errors[item.path[0]] = item.message
+    //     }
+    //   return Object.keys(errors).length === 0 ? null : errors
+    // }
 
     const handleRegister = () => {
-        if (!registerData.username.length) {
+        //this.setState({ errors: this.validate() })
+        console.log(registerData, '===========')
+        if (!registerData.userName.length) {
             return alert('username cannnot be blank')
         }
         if (!registerData.email.length) {
-            return alert('username cannnot be blank')
+            return alert('email cannnot be blank')
+        }
+        if (!registerData.mobileNumber.length) {
+            return alert('MobileNumber cannnot be blank')
         }
         if (!registerData.password.length) {
-            return alert('username cannnot be blank')
+            return alert('password cannnot be blank')
         }
         if (!registerData.address.length) {
-            return alert('username cannnot be blank')
+            return alert('address cannnot be blank')
         }
         if (!registerData.role.length) {
-            return alert('username cannnot be blank')
+            return alert('role cannnot be blank')
         }
+
+        // setErrors({
+        //   ...putErrors,
+        //   errors: validate(),
+        // })
+
         axios
-            .post(`http://localhost:8080/customer/addCustomer`, {
-                username: registerData.username,
+            .post('http://localhost:8080/admin/insert', {
+                userName: registerData.userName,
                 email: registerData.email,
                 mobileNumber: registerData.mobileNumber,
                 password: registerData.password,
@@ -67,14 +101,9 @@ const Register = () => {
                 role: registerData.role,
             })
             .then((res) => {
-                if (res.status === 201) {
-                    setAlert('success', 'Registered Successfully !');
-                    history.push("/login");
-                } else {
-                    setAlert('error', "Something Went Wrong");
-                };
-            });
-    };
+                console.log(res)
+            })
+    }
 
     return (
         <section className="landing">
@@ -84,10 +113,16 @@ const Register = () => {
                         <div className="col-md-5 mx-auto">
                             <div className="card mt-3">
                                 <div className="card-header bg-warning text-black text-center">
-                                    <h4 className="fw-bolder">
-                                        Registration Form
-                                    </h4>
-
+                                    <h4 className="fw-bolder">Registration Form</h4>
+                                    {/* <div
+            style={{
+                width: "50%",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "20px",
+            }}
+        >
+            <Typography variant="h4">Register Form</Typography> */}
                                     <Paper elevation={3}>
                                         <Box
                                             component="form"
@@ -97,7 +132,7 @@ const Register = () => {
                                         >
                                             <TextField
                                                 id="filled-basic"
-                                                label="Username"
+                                                label="UserName"
                                                 variant="filled"
                                                 type="text"
                                                 style={{ marginBottom: 10 }}
@@ -106,8 +141,7 @@ const Register = () => {
                                                 onChange={(e) =>
                                                     setRegisterData({
                                                         ...registerData,
-                                                        username:
-                                                            e.target.value,
+                                                        userName: e.target.value,
                                                     })
                                                 }
                                             />
@@ -137,69 +171,41 @@ const Register = () => {
                                                 onChange={(e) =>
                                                     setRegisterData({
                                                         ...registerData,
-                                                        mobileNumber:
-                                                            e.target.value,
+                                                        mobileNumber: e.target.value,
                                                     })
                                                 }
-                                                inputProps={{ maxLength: 10 }}
                                             />
 
                                             <TextField
                                                 id="filled-basic"
                                                 label="Password"
                                                 variant="filled"
-                                                type={passwordFlag ? "password" : "text"}
+                                                type="password"
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
                                                 onChange={(e) =>
                                                     setRegisterData({
                                                         ...registerData,
-                                                        password:
-                                                            e.target.value,
+                                                        password: e.target.value,
                                                     })
                                                 }
-                                                InputProps={{
-                                                    maxLength: 20,
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            style={{ padding: '0 0 0 2%' }}
-                                                            onClick={() => setPasswordFlag((prev) => !prev)}
-                                                        >
-                                                            {passwordFlag ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    ),
-                                                }}
                                             />
                                             <TextField
                                                 id="filled-basic"
                                                 label="Confirm Password"
                                                 variant="filled"
-                                                type={passwordFlag1 ? "password" : "text"}
+                                                type="password"
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
                                                 onChange={(e) =>
                                                     setRegisterData({
                                                         ...registerData,
-                                                        confirmPassword:
-                                                            e.target.value,
+                                                        confirmPassword: e.target.value,
                                                     })
                                                 }
-                                                InputProps={{
-                                                    maxLength: 20,
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            style={{ padding: '0 0 0 2%' }}
-                                                            onClick={() => setPasswordFlag1((prev) => !prev)}
-                                                        >
-                                                            {passwordFlag1 ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    ),
-                                                }}
-                                                // label={registerData?.password !== registerData?.confirmPassword ? "Error" : "Confirm Password"}
                                             />
-                                            {/* {registerData?.password?.length && <span>{registerData?.password === registerData?.confirmPassword ? "Matched" : "not matched"}</span>} */}
                                             <TextField
                                                 id="filled-basic"
                                                 label="Address(Optional)"
@@ -229,10 +235,7 @@ const Register = () => {
                                                 }
                                             >
                                                 {roles.map((option) => (
-                                                    <MenuItem
-                                                        key={option.value}
-                                                        value={option.value}
-                                                    >
+                                                    <MenuItem key={option.value} value={option.value}>
                                                         {option.label}
                                                     </MenuItem>
                                                 ))}
@@ -240,7 +243,7 @@ const Register = () => {
                                             <Button
                                                 variant="contained"
                                                 fullWidth
-                                                style={{ marginTop: "10px" }}
+                                                style={{ marginTop: '10px' }}
                                                 onClick={handleRegister}
                                             >
                                                 Register
@@ -254,7 +257,7 @@ const Register = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Register;
+export default AdminRegister

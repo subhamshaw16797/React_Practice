@@ -1,17 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { TextField, Box, MenuItem, Paper, Button, IconButton } from "@mui/material";
+import { TextField, Box, MenuItem, Paper, Button } from "@mui/material";
 import axios from "axios";
-import { AlertNotificationContext } from '../../alert-context/alert-state';
-import { getUserDetails } from '../../redux/actions/userDetailsAction';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const Login = () => {
-
-    const { setAlert } = useContext(AlertNotificationContext);
-    const dispatch = useDispatch()
     const history = useHistory();
     const roles = [
         {
@@ -27,10 +19,11 @@ const Login = () => {
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
-        role: ""
+        role: "",
     });
-    const [passwordFlag, setPasswordFlag] = useState(true);
     const handleLogin = () => {
+        console.log(loginData, "===========");
+
         try {
             axios
                 .post(`http://localhost:8080/customer/login`, {
@@ -40,18 +33,18 @@ const Login = () => {
                 })
                 .then((res) => {
                     if (res.status === 200) {
-                        dispatch(getUserDetails(res.data))
-                        setAlert('success', 'Successfully Logged In !');
                         history.push("/customer/profile");
                         localStorage.setItem("isLogin", res.data.loggedIn);
                     } else {
-                        setAlert('error', "User name is not present. Please Register !");
-                        history.push("/register");
+                        alert("Something Went Wrong");
+                        console.log(res, "|||||||||||||||");
                     }
                 });
         } catch (error) {
             // alert(error.);
+            console.log(error, "============");
         }
+        console.log();
     };
     return (
         <section className="landing">
@@ -62,6 +55,15 @@ const Login = () => {
                             <div className="card mt-5">
                                 <div className="card-header bg-warning text-black text-center">
                                     <h4 className="fw-bolder">Login Form</h4>
+                                    {/* <div
+                                            style={{
+                                                width: "50%",
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: "20px",
+                                            }}
+                                        >
+                                            <Typography variant="h4">Login Form</Typography> */}
                                     <Paper elevation={3}>
                                         <Box
                                             component="form"
@@ -89,7 +91,7 @@ const Login = () => {
                                                 id="filled-basic"
                                                 label="Password"
                                                 variant="filled"
-                                                type={passwordFlag ? "password" : "text"}
+                                                type="password"
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
@@ -100,17 +102,6 @@ const Login = () => {
                                                             e.target.value,
                                                     })
                                                 }
-                                                InputProps={{
-                                                    maxLength: 20,
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            style={{ padding: '0 0 0 2%' }}
-                                                            onClick={() => setPasswordFlag((prev) => !prev)}
-                                                        >
-                                                            {passwordFlag ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    ),
-                                                }}
                                             />
                                             <TextField
                                                 id="outlined-select-currency"

@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logginOutUser } from '../../redux/actions/userDetailsAction'
 import { AlertNotificationContext } from '../../alert-context/alert-state';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { deepPurple } from '@mui/material/colors';
 
 
 
@@ -52,13 +51,13 @@ const NavBar = () => {
                                     Home
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink className="nav-link" exact to='/customer'>
                                     <i class="fas fa-users" />&nbsp;
                                     Customers
                                 </NavLink>
-                            </li>
-                            {/* <li className="nav-item">
+                            </li> */}
+                            <li className="nav-item">
                                 <NavLink className="nav-link" exact to='/about'>
                                     <i class="fas fa-book-open" />&nbsp;
                                     About
@@ -69,7 +68,7 @@ const NavBar = () => {
                                     <i class="fas fa-phone-alt" />&nbsp;
                                     Contact Us
                                 </NavLink>
-                            </li> */}
+                            </li>
                         </ul>
 
 
@@ -97,15 +96,27 @@ const NavBar = () => {
                                     :
                                     <NavLink className="nav-link" exact to="/login">
                                         <i class="fas fa-sign-in-alt" />&nbsp;
-                                        Login
+                                        Customer Login
                                     </NavLink>
                                 }
                             </li>
-
+                            {!isLoggedIn && <li className="nav-item">
+                                <NavLink className="nav-link" exact to='/adminLogin'>
+                                    <i class="fas fa-users" />&nbsp;
+                                    Admin Login
+                                </NavLink>
+                            </li>}
                             {!isLoggedIn && <li className="nav-item">
                                 <NavLink className="nav-link" exact to="/register">
                                     <i class="fas fa-user-plus" />&nbsp;
-                                    Register
+                                    Customer Register
+                                </NavLink>
+                            </li>
+                            }
+                            {!isLoggedIn && <li className="nav-item">
+                                <NavLink className="nav-link" exact to="/adminRegister">
+                                    <i class="fas fa-user-plus" />&nbsp;
+                                    Admin Register
                                 </NavLink>
                             </li>
                             }

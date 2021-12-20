@@ -1,21 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { AlertNotificationContext } from '../../alert-context/alert-state';
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import {
     TextField,
     Box,
     MenuItem,
     Paper,
     Button,
-    IconButton 
+    // Typography,
 } from "@mui/material";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const Register = () => {
-    const { setAlert } = useContext(AlertNotificationContext);
-    const history = useHistory();
     const roles = [
         {
             value: "Admin",
@@ -26,9 +21,6 @@ const Register = () => {
             label: "Customer",
         },
     ];
-
-    const [passwordFlag, setPasswordFlag] = useState(true);
-    const [passwordFlag1, setPasswordFlag1] = useState(true);
 
     const [registerData, setRegisterData] = useState({
         username: "",
@@ -41,21 +33,7 @@ const Register = () => {
     });
 
     const handleRegister = () => {
-        if (!registerData.username.length) {
-            return alert('username cannnot be blank')
-        }
-        if (!registerData.email.length) {
-            return alert('username cannnot be blank')
-        }
-        if (!registerData.password.length) {
-            return alert('username cannnot be blank')
-        }
-        if (!registerData.address.length) {
-            return alert('username cannnot be blank')
-        }
-        if (!registerData.role.length) {
-            return alert('username cannnot be blank')
-        }
+        console.log(registerData, "===========");
         axios
             .post(`http://localhost:8080/customer/addCustomer`, {
                 username: registerData.username,
@@ -67,12 +45,7 @@ const Register = () => {
                 role: registerData.role,
             })
             .then((res) => {
-                if (res.status === 201) {
-                    setAlert('success', 'Registered Successfully !');
-                    history.push("/login");
-                } else {
-                    setAlert('error', "Something Went Wrong");
-                };
+                console.log(res);
             });
     };
 
@@ -87,7 +60,15 @@ const Register = () => {
                                     <h4 className="fw-bolder">
                                         Registration Form
                                     </h4>
-
+                                    {/* <div
+            style={{
+                width: "50%",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "20px",
+            }}
+        >
+            <Typography variant="h4">Register Form</Typography> */}
                                     <Paper elevation={3}>
                                         <Box
                                             component="form"
@@ -141,14 +122,13 @@ const Register = () => {
                                                             e.target.value,
                                                     })
                                                 }
-                                                inputProps={{ maxLength: 10 }}
                                             />
 
                                             <TextField
                                                 id="filled-basic"
                                                 label="Password"
                                                 variant="filled"
-                                                type={passwordFlag ? "password" : "text"}
+                                                type="password"
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
@@ -159,23 +139,12 @@ const Register = () => {
                                                             e.target.value,
                                                     })
                                                 }
-                                                InputProps={{
-                                                    maxLength: 20,
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            style={{ padding: '0 0 0 2%' }}
-                                                            onClick={() => setPasswordFlag((prev) => !prev)}
-                                                        >
-                                                            {passwordFlag ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    ),
-                                                }}
                                             />
                                             <TextField
                                                 id="filled-basic"
                                                 label="Confirm Password"
                                                 variant="filled"
-                                                type={passwordFlag1 ? "password" : "text"}
+                                                type="password"
                                                 fullWidth
                                                 style={{ marginBottom: 10 }}
                                                 required
@@ -186,20 +155,7 @@ const Register = () => {
                                                             e.target.value,
                                                     })
                                                 }
-                                                InputProps={{
-                                                    maxLength: 20,
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            style={{ padding: '0 0 0 2%' }}
-                                                            onClick={() => setPasswordFlag1((prev) => !prev)}
-                                                        >
-                                                            {passwordFlag1 ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    ),
-                                                }}
-                                                // label={registerData?.password !== registerData?.confirmPassword ? "Error" : "Confirm Password"}
                                             />
-                                            {/* {registerData?.password?.length && <span>{registerData?.password === registerData?.confirmPassword ? "Matched" : "not matched"}</span>} */}
                                             <TextField
                                                 id="filled-basic"
                                                 label="Address(Optional)"

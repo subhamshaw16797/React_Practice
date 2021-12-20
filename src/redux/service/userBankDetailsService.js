@@ -4,7 +4,7 @@ import axios from "axios";
 export const updateUserBankData = (payload) => {
     try {
         const response = axios.post(
-            `http://localhost:8080/bank/profile/insertBank/5`,
+            `http://localhost:8080/bank/profile/insertBank/${payload.id}`,
             {
                 bankName: payload.bankName,
                 accountNo: payload.accountNo,

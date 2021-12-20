@@ -16,12 +16,10 @@ import { getUserDetails } from '../../redux/actions/userDetailsAction'
 
 
 function CustomerProfile() {
-
-
     // const [open, setOpen] = React.useState(false);
     // const handleGasBookModalOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
-    const history = useHistory()
+    const history = useHistory();
     const { userDetails: { id } } = useSelector((state) => state.userData)
     const dispatch = useDispatch()
     useEffect(() => {
